@@ -7,14 +7,24 @@ public class List {
 	private Node last;
 	
 	private int size;
-	    
+	
+	private Node search_node(int pos) {
+		  Node now = first;
+		  for (int i = 0; i < pos; i++) {
+		    now = now.getNext();
+		  }
+		  return now;
+		}
+	public Object elem(int pos) {
+		  return this.search_node(pos).getElem();
+		}   
 	public void add(Object elem) {
 		 Node new_node = new Node(elem);
 		 this.last.setNext(new_node);
 		 this.last = new_node;
 		 this.size++;
 	}
-	public void remove(int pos){
+	public void removeEnd(){
 		Node now = first;
 		for (int i = 0; i < this.size - 2; i++) {
 		    now = now.getNext();
@@ -24,6 +34,19 @@ public class List {
 		    this.last = beforelast;
 		    this.size--;
 	}
+	public void remove(int pos) {
+		   if (pos == this.size - 1) {
+		    this.removeEnd();
+		  } else {
+		    Node before = this.search_node(pos - 1);
+		    Node now = before.getNext();
+		    Node next = now.getNext();
+		    
+		    before.setNext(next);
+		    
+		    this.size--;
+		  }
+		}
 	public boolean search(Node data) {
 		Node now = first;
 		for (int i = 0; i < this.size - 1; i++) {
@@ -60,3 +83,4 @@ public class List {
 		}
 
 }
+
