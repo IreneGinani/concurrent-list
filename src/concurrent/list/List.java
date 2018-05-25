@@ -34,7 +34,7 @@ public class List {
 		    this.last = beforelast;
 		    this.size--;
 	}
-	public void remove(int pos) {
+	public void remove_pos(int pos) {
 		   if (pos == this.size - 1) {
 		    this.removeEnd();
 		  } else {
@@ -47,11 +47,21 @@ public class List {
 		    this.size--;
 		  }
 		}
-	public boolean search(Node data) {
+	public void remove(Object elem) {
+		
+		Node now = first;
+		  for (int i = 0; i < size; i++) {
+			  if (elem == now.getElem()) {
+				  remove_pos(i);
+			  }
+		  }
+		   
+		}
+	public boolean search(Object data) {
 		Node now = first;
 		for (int i = 0; i < this.size - 1; i++) {
 		    now = now.getNext();
-		    if (now.getElem() == data.getElem()) {
+		    if (now.getElem() == data) {
 		    	return true;
 		    }
 		  }
@@ -83,4 +93,3 @@ public class List {
 		}
 
 }
-
