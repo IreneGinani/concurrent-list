@@ -17,12 +17,12 @@ public class ConcurrentList {
 	}
  
 	/**
-	 * 
-	 * @param t
+	 * Perform thread operation.
+	 * @param thread
 	 * @param elem
 	 * @throws InterruptedException
 	 */
-	public void try_modify(ThreadAccess t, int elem) throws InterruptedException{
+	public void performOperation(ThreadAccess t, int elem) throws InterruptedException{
 		if (t.getType() == Type.I) {
 			try { 
 				semaphore.acquire(); 
@@ -51,8 +51,7 @@ public class ConcurrentList {
 				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + elem + ""
 						+ " Value > " + n.getValue());
 			} catch (IndexOutOfBoundsException e) {
-				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + elem);
-				System.out.println(" ERROR: " + e.getMessage());
+				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + elem + " >> ERROR: " + e.getMessage() + " << "); 
 			}
 		} 
 	} 

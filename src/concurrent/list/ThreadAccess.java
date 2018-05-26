@@ -20,7 +20,7 @@ public class ThreadAccess extends Thread {
 	@Override
 	public void run() {   
 		try {
-			list.try_modify(this, elem);
+			list.performOperation(this, elem);
 		} catch (InterruptedException e1) { 
 			e1.printStackTrace();
 		}  
