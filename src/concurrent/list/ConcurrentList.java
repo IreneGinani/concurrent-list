@@ -2,52 +2,58 @@ package concurrent.list;
 
 import java.util.concurrent.Semaphore;
 
-public class Concurrent_list {
-	
-	private Semaphore semaphore = new Semaphore (1,true);
-	
-	private List list;
-	
-	
-	
-	public Concurrent_list(List list) {
+/**
+ * 
+ * @author  Gabriela Cavalcante and Irene Ginani
+ * @version 24/05/2018
+ */
+public class ConcurrentList {
+	private Semaphore semaphore = new Semaphore (1, true);
+	private List list; 
+	 
+	public ConcurrentList(List list) {
 		super();
 		this.list = list;
 	}
-
-
-
-	public void try_modify(Thread_Access t, int elem) throws InterruptedException{
-		
-		
-		if (t.getType().equals("I")) {
-			
-			try {
-				
-				semaphore.acquire();
+ 
+	/**
+	 * 
+	 * @param t
+	 * @param elem
+	 * @throws InterruptedException
+	 */
+	public void try_modify(ThreadAccess t, int elem) throws InterruptedException{
+		if (t.getType() == Type.I) {
+			try { 
+				semaphore.acquire(); 
 				list.add(elem);
-				
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} finally {
+				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Value > " + elem + ""
+						+ " list > " + list.toString());
+			}  finally {
 				semaphore.release();
-			}
-				
-		}else if (t.getType().equals("R")) {
+			} 
+		} else if (t.getType() == Type.R) {
 			try {
-				
 				semaphore.acquire();
-				list.remove(elem);
-				
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				list.remove(elem); 
+				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + elem + ""
+						+ " list > " + list.toString());
+			} catch (IndexOutOfBoundsException e) {
+				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + elem + ""
+						+ " list > " + list.toString());
+				System.out.println(" ERROR: " + e.getMessage());
 			} finally {
 				semaphore.release();
 			}
-		}else if(t.getType().equals("B")) {
-			list.search(elem);
-		}
-		
-	}
-
+		} else if (t.getType() == Type.B) {
+			try {
+				Node n = list.searchNode(elem);
+				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + elem + ""
+						+ " Value > " + n.getValue());
+			} catch (IndexOutOfBoundsException e) {
+				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + elem);
+				System.out.println(" ERROR: " + e.getMessage());
+			}
+		} 
+	} 
 }

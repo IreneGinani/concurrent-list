@@ -1,45 +1,32 @@
-package concurrent.list;
+package concurrent.list; 
 
-import java.util.Random;
-
-public class Thread_Access extends Thread{
-	
+/**
+ * 
+ * @author  Gabriela Cavalcante and Irene Ginani
+ * @version 24/05/2018
+ */
+public class ThreadAccess extends Thread {
 	private Type type; 
-	private Concurrent_list list;
-	private int time;
+	private ConcurrentList list; 
+	int elem; 
 	
-	int elem = 8;
-	
-	
-	
-	public Thread_Access(String name, Concurrent_list list) {
+	public ThreadAccess(String name, ConcurrentList list, Type type, int elem) {
 		super(name);
-		this.type = Type.getType();
-		this.list = list;
-		
-		Random random = new Random();
-		this.time = random.nextInt(5);
-	}
-
+		this.type = type;
+		this.list = list; 
+		this.elem = elem;
+	} 
 	
 	@Override
 	public void run() {   
 		try {
 			list.try_modify(this, elem);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
+		} catch (InterruptedException e1) { 
 			e1.printStackTrace();
-		} 
-		
-		try {
-			Thread.sleep ((long) (this.time) * 1000);
-		} catch (InterruptedException e) { 
-			e.printStackTrace();
-		}   
+		}  
 	}
 
 	public Type getType() {
 		return type;
-} 
-
+	}  
 }
