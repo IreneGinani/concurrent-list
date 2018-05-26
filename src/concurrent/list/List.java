@@ -52,7 +52,7 @@ public class List {
 	 * @return the node that was removed from the list.
 	 */
 	public Node remove(int index) {  
-		if(index >= this.size) 
+		if (index >= this.size) 
 	        throw new IndexOutOfBoundsException("Node doesn't exist");
 		
 		Node node = this.searchNode(index);
