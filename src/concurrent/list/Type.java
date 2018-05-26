@@ -6,15 +6,15 @@ import java.util.Random;
  * Type enum.
  * 
  * @author  Gabriela Cavalcante and Irene Ginani
- * @version 20/05/2018
+ * @version 24/05/2018
  */
 
 public enum Type {
 	B, I, R;
 
 	/**
-	 * Returns a random gender.
-	 * @return random gender.
+	 * Returns a random action.
+	 * @return random action.
 	 */
 	public static Type getType()  {
 		Random random = new Random();
