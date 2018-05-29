@@ -17,42 +17,53 @@ public class ConcurrentList {
 	}
  
 	/**
-	 * Perform thread operation.
-	 * @param thread
-	 * @param elem
-	 * @throws InterruptedException
+	 * Perform search operation.
+	 * @param thread 
+	 * @param index index to rearch  
 	 */
-	public void performOperation(ThreadAccess t, int elem) throws InterruptedException{
-		if (t.getType() == Type.I) {
-			try { 
-				semaphore.acquire(); 
-				list.add(elem);
-				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Value > " + elem + ""
-						+ " list > " + list.toString());
-			}  finally {
-				semaphore.release();
-			} 
-		} else if (t.getType() == Type.R) {
-			try {
-				semaphore.acquire();
-				list.remove(elem); 
-				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + elem + ""
-						+ " list > " + list.toString());
-			} catch (IndexOutOfBoundsException e) {
-				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + elem + ""
-						+ " list > " + list.toString());
-				System.out.println(" ERROR: " + e.getMessage());
-			} finally {
-				semaphore.release();
-			}
-		} else if (t.getType() == Type.B) {
-			try {
-				Node n = list.searchNode(elem);
-				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + elem + ""
-						+ " Value > " + n.getValue());
-			} catch (IndexOutOfBoundsException e) {
-				System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + elem + " >> ERROR: " + e.getMessage() + " << "); 
-			}
-		} 
+	public void performSearch(ThreadAccess t, int index) {
+		try {
+			Node n = list.searchNode(index);
+			System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + index + ""
+					+ " Value > " + n.getValue());
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + index + " >> ERROR: " + e.getMessage() + " << "); 
+		}
+	}
+
+	/**
+	 * Perform removal operation.
+	 * @param thread 
+	 * @param index index to remove  
+	 */
+	public void performRemoval(ThreadAccess t, int index) throws InterruptedException {
+		try {
+			semaphore.acquire();
+			list.remove(index); 
+			System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + index + ""
+					+ " list > " + list.toString());
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Index > " + index + ""
+					+ " list > " + list.toString());
+			System.out.println(" ERROR: " + e.getMessage());
+		} finally {
+			semaphore.release();
+		}
+	}
+
+	/**
+	 * Perform insertion operation.
+	 * @param thread 
+	 * @param value value to insert  
+	 */
+	public void performInsertion(ThreadAccess t, int value) throws InterruptedException {
+		try { 
+			semaphore.acquire(); 
+			list.add(value);
+			System.out.println(t.getName() + " | Type > " + t.getType().name() + " | Value > " + value + ""
+					+ " list > " + list.toString());
+		}  finally {
+			semaphore.release();
+		}
 	} 
 }

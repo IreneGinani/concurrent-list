@@ -20,7 +20,13 @@ public class ThreadAccess extends Thread {
 	@Override
 	public void run() {   
 		try {
-			list.performOperation(this, elem);
+			if (this.type == Type.I) { 
+				list.performInsertion(this, elem);
+			} else if (this.type == Type.R) { 
+				list.performRemoval(this, elem);
+			} else if (this.type == Type.B) { 
+				list.performSearch(this, elem);
+			}  
 		} catch (InterruptedException e1) { 
 			e1.printStackTrace();
 		}  
